@@ -1,0 +1,71 @@
+init
+end
+
+comment::- @
+
+stBComment::- {
+endBComment::-}
+blocComment::- stBComment cadena endBComment
+
+stBloc::- \
+endBloc::- /
+bloc::- stBloc (operAritm|func|operBin|op) endBloc
+
+
+paramLit::- chara | cadena 
+paramNum::- num | numDec
+
+char var1= "a";
+char var1;
+
+int matriz1|2||3|;
+int matriz=||1,2,3|,|4,5,6||
+
+func
+bloc
+
+enter
+bool
+chara --num
+charac --matrices
+cadena
+matrix
+
+sum::- num + num | numDec+ numDec
+rest
+multi
+divi
+modul
+pote
+
+menor::- <
+mayor::- >
+
+menorIg::- <=
+MayorIg::- >=
+
+dife::- !=
+
+and::- ^
+or::- #
+
+num-> [0-9]
+numDec-> [1-9].?num*
+
+endExpr::- ?
+
+read
+print
+
+if
+elif
+else
+doWhile
+break
+for
+
+return
+
+
+
+operacionArit-> sum | rest | multi | divi | pote | modul | sum * rest |
