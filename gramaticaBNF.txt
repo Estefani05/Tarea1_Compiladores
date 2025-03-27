@@ -1,58 +1,84 @@
-init
-end
+Terminales-----------------------
+main-> bloc
+end-> &
 
-comment::- @
+numEnt-> [0-9]*
+numFlo-> [1-9].?[0-9]*
+numNeg-> -?[1-9][0-9]*
+num-> numEnt | numFlo | numNeg
 
-stBComment::- {
-endBComment::-}
-blocComment::- stBComment cadena endBComment
-
-stBloc::- \
-endBloc::- /
-bloc::- stBloc (operAritm|func|operBin|op) endBloc
+id-> [num cadena]*
+eql-> =
+dife-> !=
 
 
-paramLit::- chara | cadena 
-paramNum::- num | numDec
+menor-> <
+mayor-> >
 
-char var1= "a";
-char var1;
+menorIg-> <=
+MayorIg-> >=
 
-int matriz1|2||3|;
-int matriz=||1,2,3|,|4,5,6||
+true-> 
+false->
+
+bool-> true | false
+chara-> [a-zA-Z]|-|_
+cadena-> chara | numNeg | numDec | id
+
+
+
+
+
+endExpr-> ?
+
+
+
+No Terminales------------------------
+
+comment-> @ cadena
+
+sum-> num + num | chara + chara
+rest-> num - num | chara - chara
+multi-> num * num | chara * chara
+divi-> num // num | chara // chara
+modul-> num ~ num | chara ~ chara
+pote-> num ** num | chara ** chara
+
+nega-> - [numEnt numFlo cadena]
+sumx-> ++ [numEnt numFlo]
+resx-> -- [numEnt numFlo]
+
+exprexArit-> sum | rest | mult | divi | modul | pote
+
+comparacion-> (numEnt [< > <= >=] numEnt)| (numFlot [< > <= >=] numFlot)
+
+stBComment-> {
+endBComment->}
+blocComment-> stBComment cadena endBComment
+
+stBloc-> \
+endBloc-> /
+bloc-> stBloc (operAritm|func|operBin|op|bloc) endBloc
+
+
+paramLit-> chara | cadena 
+paramNum-> num | numDec
+
+and-> bool ^ bool
+or-> bool # bool
+
+tipo-> ent | flot | bool | chara
+
+lista-> numEnt list | numEnt | ?
+listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
+matrix-> tipo numEnt |numEnt||numEnt| ?
+matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
+
+return-> bool | cadena | num
 
 func
 bloc
 
-enter
-bool
-chara --num
-charac --matrices
-cadena
-matrix
-
-sum::- num + num | numDec+ numDec
-rest
-multi
-divi
-modul
-pote
-
-menor::- <
-mayor::- >
-
-menorIg::- <=
-MayorIg::- >=
-
-dife::- !=
-
-and::- ^
-or::- #
-
-num-> [0-9]
-numDec-> [1-9].?num*
-
-endExpr::- ?
 
 read
 print
@@ -64,7 +90,7 @@ doWhile
 break
 for
 
-return
+
 
 
 
