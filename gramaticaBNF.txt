@@ -2,7 +2,7 @@ Terminales-----------------------
 	main-> bloc
 	end-> '?'
 
-	numEnt-> [0-9]*
+	numEnt-> [0-9]+
 	numFlo-> [1-9].?[0-9]*
 	num-> numEnt | numFlo 
 
@@ -11,19 +11,12 @@ Terminales-----------------------
 	dife-> !=
 
 
-	menor-> <
-	mayor-> >
-
-	menorIg-> <=
-	MayorIg-> >=
-
-	true-> 
-	false->
+	opComp -> "<" | ">" | "<=" | ">=" | "==" | "!="
+	opBool -> \^ | \# | \!
 
 	bool-> true | false
 	chara-> [a-zA-Z]|-|_
-	cadena-> chara | numNeg | numDec | id
-	cadena-> chara*
+	cadena-> chara+
 
 	endExpr-> ?
 
@@ -39,15 +32,16 @@ No Terminales------------------------
 	modul-> num ~ num 
 	pote-> num ** num 
 
-	nega-> - [numEnt numFlo] //Se quito la cadena
+	nega-> - num //Se quito la cadena
 	sumx-> ++ num
 	resx-> -- num
 
-	exprexArit-> sum | rest | mult | divi | modul | pote
+	exprexArit-> sum | rest | mult | divi | modul | pote 
 
-	comparacion-> (numEnt [< > <= >= !=] numEnt)| (numFlot [< > <= >= !=] numFlot)
+	comparacion-> (num | id | funcion |elementoArray | elementoMatrix) opComp (num | id | funcion| elementoArray | elementoMatrix)
 	
-	opLogica-> (numEnt [# ! ^] numEnt)| (numFlot [# ! ^] numFlot) | (chara [# ! ^] chara) | (cadena [# ! ^] cadena)
+	opLogica-> (num | id | funcion) opBool (num | id | funcion)
+	concat -> (cadena | id | funcion) \+ (cadena | id | funcion)
 
 	stBComment-> {
 	endBComment->}
@@ -55,31 +49,38 @@ No Terminales------------------------
 
 	stBloc-> \
 	endBloc-> /
-	bloc-> stBloc (operAritm|func|operBin|op|bloc) endBloc
+	bloc-> stBloc (exprexArit | func | opLogica | bloc) endBloc
 
 
 	paramLit-> chara | cadena 
-	paramNum-> num | numDec
+	paramNum-> num
+	
+	declaracionVar -> tipo id
+	declaracionAsig -> tipo id eql valor
+	asignacion -> id eql (exprexArit | num | cadena)
+	asignacionBool -> id eql (comparacion | opLogica)
+	expresionLibre -> exprexArit | comparacion | opLogica | print
 
 	and-> bool ^ bool
 	or-> bool # bool
 
 	tipo-> ent | flot | boole | char | cade
-
-	lista-> numEnt list | numEnt | ?
+	
+	lista -> tipo id \| numEnt (\| numEnt)* \| (Creo que asi es la buena)
+	elementoArray -> id \[ numEnt \]
+	modificacionArray -> id \[ numEnt \] eql numEnt
+	
+	lista-> \[ ( numEnt ( \, numEnt)* )? \]
 	listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
-	matrix-> tipo numEnt |numEnt||numEnt| ?
+
+	matrix->  \[ ( lista ( \, lista)* )? \]
 	matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
+	elementoMatrix -> id \[ numEnt \]\[ numEnt \]
 
 	return-> bool | cadena | num
 
-	func -> tipo cadena \(parametros*\) bloque return [paramLit|paramNum] 
-	bloc
+	func -> tipo id \(parametros? \) bloque "return" return endExpr
 	
-	int suma (int num1, int num2)
-		 sum2 = sum1+sum2
-		retorn suma2;
-		
 	parametroInt -> ent numEnt
 	parametroFloat -> flot numFlo
 	parametroChar -> char chara
@@ -88,19 +89,19 @@ No Terminales------------------------
 	
 	parametros -> parametroInt | parametroFloat | parametroChar | parametroBoole | parametroCade
 	
-	cometario -> @ cadena 
+	cometario -> \@ cadena 
 	cometarios -> \{ cadena \}
 	
-	read
-	print
+	read -> "read" \( id \) endExpr
+	print -> "print" \( id \) endExpr
 
-	funcion -> 
-	if -> condicion bloque return elif* else?
-	elif
-	else
-	doWhile
-	break
-	for
+	if -> "if" \( comparacion \) bloc elif* else?
+	elif -> "elif" \( comparacion \) bloc
+	else -> "else" bloc
+	
+	doWhile -> "do" bloc "while" \( comparacion \) endExpr
+	break -> "break" endExpr
+	for -> "for" \( tipo id \= num \; comparacion \; id ++ \) bloc
 
 
 
