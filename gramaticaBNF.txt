@@ -1,94 +1,95 @@
 Terminales-----------------------
-main-> bloc
-end-> &
+	main-> bloc
+	end-> '?'
 
-numEnt-> [0-9]*
-numFlo-> [1-9].?[0-9]*
-numNeg-> -?[1-9][0-9]*
-num-> numEnt | numFlo | numNeg
+	numEnt-> [0-9]*
+	numFlo-> [1-9].?[0-9]*
+	num-> numEnt | numFlo 
 
-id-> [num cadena]*
-eql-> =
-dife-> !=
-
-
-menor-> <
-mayor-> >
-
-menorIg-> <=
-MayorIg-> >=
-
-true-> 
-false->
-
-bool-> true | false
-chara-> [a-zA-Z]|-|_
-cadena-> chara | numNeg | numDec | id
+	id-> [num cadena]*
+	eql-> =
+	dife-> !=
 
 
+	menor-> <
+	mayor-> >
+
+	menorIg-> <=
+	MayorIg-> >=
+
+	true-> 
+	false->
+
+	bool-> true | false
+	chara-> [a-zA-Z]|-|_
+	cadena-> chara | numNeg | numDec | id
+	cadena-> chara*
 
 
 
-endExpr-> ?
 
+
+	endExpr-> ?
 
 
 No Terminales------------------------
 
-comment-> @ cadena
+	comment-> @ cadena
 
-sum-> num + num | chara + chara
-rest-> num - num | chara - chara
-multi-> num * num | chara * chara
-divi-> num // num | chara // chara
-modul-> num ~ num | chara ~ chara
-pote-> num ** num | chara ** chara
+	sum-> num + num | chara + chara 
+	rest-> num - num 
+	multi-> num * num 
+	divi-> num // num 
+	modul-> num ~ num 
+	pote-> num ** num 
 
-nega-> - [numEnt numFlo cadena]
-sumx-> ++ [numEnt numFlo]
-resx-> -- [numEnt numFlo]
+	nega-> - [numEnt numFlo] //Se quito la cadena
+	sumx-> ++ num
+	resx-> -- num
 
-exprexArit-> sum | rest | mult | divi | modul | pote
+	exprexArit-> sum | rest | mult | divi | modul | pote
 
-comparacion-> (numEnt [< > <= >=] numEnt)| (numFlot [< > <= >=] numFlot)
+	comparacion-> (numEnt [< > <= >= !=] numEnt)| (numFlot [< > <= >= !=] numFlot)
+	
+	opLogica-> (numEnt [# ! ^] numEnt)| (numFlot [# ! ^] numFlot) | (chara [# ! ^] chara) | (cadena [# ! ^] cadena)
 
-stBComment-> {
-endBComment->}
-blocComment-> stBComment cadena endBComment
+	stBComment-> {
+	endBComment->}
+	blocComment-> stBComment cadena endBComment
 
-stBloc-> \
-endBloc-> /
-bloc-> stBloc (operAritm|func|operBin|op|bloc) endBloc
-
-
-paramLit-> chara | cadena 
-paramNum-> num | numDec
-
-and-> bool ^ bool
-or-> bool # bool
-
-tipo-> ent | flot | bool | chara
-
-lista-> numEnt list | numEnt | ?
-listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
-matrix-> tipo numEnt |numEnt||numEnt| ?
-matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
-
-return-> bool | cadena | num
-
-func
-bloc
+	stBloc-> \
+	endBloc-> /
+	bloc-> stBloc (operAritm|func|operBin|op|bloc) endBloc
 
 
-read
-print
+	paramLit-> chara | cadena 
+	paramNum-> num | numDec
 
-if
-elif
-else
-doWhile
-break
-for
+	and-> bool ^ bool
+	or-> bool # bool
+
+	tipo-> ent | flot | bool | chara
+
+	lista-> numEnt list | numEnt | ?
+	listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
+	matrix-> tipo numEnt |numEnt||numEnt| ?
+	matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
+
+	return-> bool | cadena | num
+
+	func
+	bloc
+
+
+	read
+	print
+
+	if
+	elif
+	else
+	doWhile
+	break
+	for
 
 
 
