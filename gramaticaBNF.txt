@@ -25,10 +25,6 @@ Terminales-----------------------
 	cadena-> chara | numNeg | numDec | id
 	cadena-> chara*
 
-
-
-
-
 	endExpr-> ?
 
 
@@ -68,7 +64,7 @@ No Terminales------------------------
 	and-> bool ^ bool
 	or-> bool # bool
 
-	tipo-> ent | flot | bool | chara
+	tipo-> ent | flot | boole | char | cade
 
 	lista-> numEnt list | numEnt | ?
 	listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
@@ -77,14 +73,29 @@ No Terminales------------------------
 
 	return-> bool | cadena | num
 
-	func
+	func -> tipo cadena \(parametros*\) bloque return [paramLit|paramNum] 
 	bloc
-
-
+	
+	int suma (int num1, int num2)
+		 sum2 = sum1+sum2
+		retorn suma2;
+		
+	parametroInt -> ent numEnt
+	parametroFloat -> flot numFlo
+	parametroChar -> char chara
+	parametroBoole -> boole bool
+	parametroCade -> cade cadena
+	
+	parametros -> parametroInt | parametroFloat | parametroChar | parametroBoole | parametroCade
+	
+	cometario -> @ cadena 
+	cometarios -> \{ cadena \}
+	
 	read
 	print
 
-	if
+	funcion -> 
+	if -> condicion bloque return elif* else?
 	elif
 	else
 	doWhile
