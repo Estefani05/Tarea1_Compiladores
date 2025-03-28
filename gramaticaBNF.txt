@@ -1,94 +1,168 @@
 Terminales-----------------------
-main-> bloc
-end-> &
+	
+	mas-> '+'
+	mens-> '-'
+	multi-> '*'
+	div-> '//'
+	mod-> '~'
+	pote-> '**'
 
-numEnt-> [0-9]*
-numFlo-> [1-9].?[0-9]*
-numNeg-> -?[1-9][0-9]*
-num-> numEnt | numFlo | numNeg
+	eql-> '='
 
-id-> [num cadena]*
-eql-> =
-dife-> !=
+	isEqu-> '=='
+	mayQue-> '>'
+	menQue-> '<'
+	mayEquQue-> '>='
+	menEquQue-> '<='
+	dife-> '!='
+	sumUn-> '++'
+	resUn-> '--' 
+	
+	endExp-> '?'
+	
+	dot-> '.'
+	comma-> ','
+	parentIz-> '('
+	parentDe-> ')'
+	
+	main-> 'main'
+
+	true-> 'true'
+	false-> 'false'
+
+	and-> '^'
+	or-> '#'
+	nega-> '!'
+
+	iniBlock-> '\'
+	endBlock-> '/'
+
+	if-> 'if'
+	elif-> 'elif'
+	else-> 'else'
+
+	doWhile-> 'doWhile'
+	break-> 'break'
+	for-> 'for'
+	return-> 'return'
+	
+ 	read-> 'leer'
+	print-> 'impr'
 
 
-menor-> <
-mayor-> >
+	arreg-> 'arrx' 
+	matrix-> 'matrx'
 
-menorIg-> <=
-MayorIg-> >=
+	funcion-> 'func'
+	parametro-> 'param'
 
-true-> 
-false->
-
-bool-> true | false
-chara-> [a-zA-Z]|-|_
-cadena-> chara | numNeg | numDec | id
-
-
-
-
-
-endExpr-> ?
-
-
+	numEnt-> [0-9]+
+	numFlo-> [1-9].?[0-9]*
+	char-> [a-zA-Z_]
 
 No Terminales------------------------
 
-comment-> @ cadena
+	main-> expr
+	
+	expr-> expr expr
 
-sum-> num + num | chara + chara
-rest-> num - num | chara - chara
-multi-> num * num | chara * chara
-divi-> num // num | chara // chara
-modul-> num ~ num | chara ~ chara
-pote-> num ** num | chara ** chara
+	opArit-> mas | mens | multi | div | mod | pote | eql
+	opRela-> isEqu |  | mayQue | menQue | mayEquQue | menEquQue | dife 
+	opLogi-> and | or | nega
+	opUnar-> sumUn | resUn
+	ope-> opArit | opRela | opLogi | opUnar
 
-nega-> - [numEnt numFlo cadena]
-sumx-> ++ [numEnt numFlo]
-resx-> -- [numEnt numFlo]
+	bool-> true | false
 
-exprexArit-> sum | rest | mult | divi | modul | pote
-
-comparacion-> (numEnt [< > <= >=] numEnt)| (numFlot [< > <= >=] numFlot)
-
-stBComment-> {
-endBComment->}
-blocComment-> stBComment cadena endBComment
-
-stBloc-> \
-endBloc-> /
-bloc-> stBloc (operAritm|func|operBin|op|bloc) endBloc
+	
+	cadena-> char+
 
 
-paramLit-> chara | cadena 
-paramNum-> num | numDec
-
-and-> bool ^ bool
-or-> bool # bool
-
-tipo-> ent | flot | bool | chara
-
-lista-> numEnt list | numEnt | ?
-listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
-matrix-> tipo numEnt |numEnt||numEnt| ?
-matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
-
-return-> bool | cadena | num
-
-func
-bloc
+	comment-> @ cadena
 
 
-read
-print
+	
+	num-> numEnt | numFlo
 
-if
-elif
-else
-doWhile
-break
-for
+	id-> [num cadena]*
+
+	sum-> num + num | chara + chara 
+	rest-> num - num 
+	multi-> num * num 
+	divi-> num // num 
+	modul-> num ~ num 
+	pote-> num ** num 
+
+	nega-> - num //Se quito la cadena
+	
+
+	exprexArit-> sum | rest | mult | divi | modul | pote 
+
+	comparacion-> (num | id | funcion |elementoArray | elementoMatrix) opComp (num | id | funcion| elementoArray | elementoMatrix)
+	
+	opLogica-> (num | id | funcion) opBool (num | id | funcion)
+	concat -> (cadena | id | funcion) \+ (cadena | id | funcion)
+
+	stBComment-> {
+	endBComment->}
+	blocComment-> stBComment cadena endBComment
+
+	stBloc-> \
+	endBloc-> /
+	bloc-> stBloc (exprexArit | func | opLogica | bloc) endBloc
+
+
+	paramLit-> chara | cadena 
+	paramNum-> num
+	param-> paramNum | paramLit
+	
+	declaracionVar -> tipo id
+	declaracionAsig -> tipo id eql valor
+	asignacion -> id eql (exprexArit | num | cadena)
+	asignacionBool -> id eql (comparacion | opLogica)
+	expresionLibre -> exprexArit | comparacion | opLogica | print
+
+	and-> bool ^ bool
+	or-> bool # bool
+
+	tipo-> ent | flot | boole | char | cade
+	
+	lista -> tipo id \| numEnt (\| numEnt)* \| (Creo que asi es la buena)
+	elementoArray -> id \[ numEnt \]
+	modificacionArray -> id \[ numEnt \] eql numEnt
+	
+	lista-> \[ ( numEnt ( \, numEnt)* )? \]
+	listaAsig-> numEnt list | numEnt (, numEnt)* | ?   lista1[1,2,3,4,5,6...]
+
+	matrix->  \[ ( lista ( \, lista)* )? \]
+	matrixAsig->numEnt matr (|numEnt (, numEnt)*|)(,(|numEnt (, numEnt)*|))?? matriz[[1,2,3,4,5],[4,5,6,7,8]]
+	elementoMatrix -> id \[ numEnt \]\[ numEnt \]
+
+	return-> bool | cadena | num
+
+	func -> tipo id \(parametros? \) bloque "return" return endExpr
+	
+	parametroInt -> ent numEnt
+	parametroFloat -> flot numFlo
+	parametroChar -> char chara
+	parametroBoole -> boole bool
+	parametroCade -> cade cadena
+	
+	parametros -> parametroInt | parametroFloat | parametroChar | parametroBoole | parametroCade
+	
+	cometario -> \@ cadena 
+	cometarios -> \{ cadena \}
+	
+	read -> "read" \( id \) endExpr
+	print -> "print" \( id \) endExpr
+
+	if -> "if" \( comparacion \) bloc elif* else?
+	elif -> "elif" \( comparacion \) bloc
+	else -> "else" bloc
+	
+	doWhile -> "do" bloc "while" \( comparacion \) endExpr
+	break -> "break" endExpr
+	for -> "for" \( tipo id \= num \; comparacion \; id ++ \) bloc
 
 
 
