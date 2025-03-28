@@ -32,7 +32,7 @@ Terminales-----------------------
 
 	and-> '^'
 	or-> '#'
-	nega-> '!'
+	neg-> '!'
 
 	iniBlock-> '\'
 	endBlock-> '/'
@@ -41,7 +41,8 @@ Terminales-----------------------
 	elif-> 'elif'
 	else-> 'else'
 
-	doWhile-> 'doWhile'
+	do-> 'do'
+	while-> 'while'
 	break-> 'break'
 	for-> 'for'
 	return-> 'return'
@@ -54,6 +55,7 @@ Terminales-----------------------
 	matrix-> 'matrx'
 
 	funcion-> 'func'
+	void-> 'void'
 	parametro-> 'param'
 
 	numEnt-> [0-9]+
@@ -64,13 +66,21 @@ No Terminales------------------------
 
 	main-> expr
 	
-	expr-> expr expr
-
-	opArit-> mas | mens | multi | div | mod | pote | eql
-	opRela-> isEqu |  | mayQue | menQue | mayEquQue | menEquQue | dife 
-	opLogi-> and | or | nega
-	opUnar-> sumUn | resUn
-	ope-> opArit | opRela | opLogi | opUnar
+	expr-> expr expr endExp
+	expr-> opera endExp
+	expr-> bool endExp
+	expr-> ifBloc endExp
+	expr-> doWhile endExp
+	expr-> expr break endExp
+	expr-> forBloc endExp
+	expr-> return endExp
+	expr-> blocComment endExp
+	expr-> comment endExp
+	expr-> num endExp
+	expr-> char endExp	
+	expr-> cadena endExp
+	expr-> bloc endExp
+	expr-> params endExp
 
 	bool-> true | false
 
@@ -78,43 +88,58 @@ No Terminales------------------------
 	cadena-> char+
 	block-> iniBlock expr endBlock
 
-	comment-> @ cadena
+	comment-> @ expr
 
-
-	
 	num-> numEnt | numFlo
 
 	id-> [num cadena]*
 
-	sum-> num + num | chara + chara 
-	rest-> num - num 
-	multi-> num * num 
-	divi-> num // num 
-	modul-> num ~ num 
-	pote-> num ** num 
+	suma-> num mas num 
+	resta-> num mens num 
+	multipli-> num multi num 
+	divisi-> num div num 
+	modul-> num mod num 
+	poten-> num pot num 
+	opArit-> suma | resta | multipli | divisi | modul | poten
 
-	nega-> - num //Se quito la cadena
+	isEqual-> num isEqu num | id isEqu id | cadena isEqu cadena | bool isEqu bool
+	isDiffe-> num dife num | id dife id | cadena dife cadena | bool dife bool
+	mayrQue-> num mayQue num 
+	menrQue-> num menQue num
+	mayrEquQue-> num mayEquQue num
+	menrEquQue-> num menEquQue num
+	opRela-> isEqual | isDiffe | mayrQue | menrQue | mayrEquQue | menrEquQue
+
+	conjun-> bool and bool
+	disyun-> bool or bool
+	nega-> neg bool
+	opLogi-> conjun | disyun | nega
+
+	sumUnar-> sumUn num | sumUn id
+	restUnar-> resUn num | resUn id
+	opUnar-> sumUnar | restUnar
+
+	opera-> opArit | opRela | opLogi | opUnar
+
+	param-> bool
+	params-> param ((comma param)*)?
 	
+	ifStruc-> if parentIz params parentDe block elif?  
+	elifStruc-> elif parentIz params parentDe block elif?
+	elseStruc-> else initBlock expr endBlock
+	ifBloc-> ifStruc elseStruct
 
-	exprexArit-> sum | rest | mult | divi | modul | pote 
+	doWhile-> do block while parentIz params parentDe 
 
-	comparacion-> (num | id | funcion |elementoArray | elementoMatrix) opComp (num | id | funcion| elementoArray | elementoMatrix)
-	
-	opLogica-> (num | id | funcion) opBool (num | id | funcion)
-	concat -> (cadena | id | funcion) \+ (cadena | id | funcion)
+	forBloc-> for parentIz params parentDe bloc	
 
 	stBComment-> {
 	endBComment->}
-	blocComment-> stBComment cadena endBComment
+	blocComment-> stBComment expr endBComment
 
 	stBloc-> \
 	endBloc-> /
-	bloc-> stBloc (exprexArit | func | opLogica | bloc) endBloc
-
-
-	paramLit-> chara | cadena 
-	paramNum-> num
-	param-> paramNum | paramLit
+	bloc-> stBloc expr endBloc
 	
 	declaracionVar -> tipo id
 	declaracionAsig -> tipo id eql valor
@@ -122,8 +147,6 @@ No Terminales------------------------
 	asignacionBool -> id eql (comparacion | opLogica)
 	expresionLibre -> exprexArit | comparacion | opLogica | print
 
-	and-> bool ^ bool
-	or-> bool # bool
 
 	tipo-> ent | flot | boole | char | cade
 	
