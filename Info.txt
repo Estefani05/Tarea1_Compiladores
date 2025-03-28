@@ -1,0 +1,11 @@
+Compiladores e Interpretres
+I semestre 2025
+Nombre de los Estudiantes:
+Estefani Valverde 2021554564
+Jordano Escalante 2018161994
+Keingell Moodie 2021495925
+Tarea 1
+Fecha de entrega: Viernes 28 marzo 2025
+
+Estatus de la entrega (debe ser CONGRUENTE con la solución entregada):
+(Excelente)
