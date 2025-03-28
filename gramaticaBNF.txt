@@ -76,7 +76,7 @@ No Terminales------------------------
 
 	
 	cadena-> char+
-
+	block-> iniBlock expr endBlock
 
 	comment-> @ cadena
 
