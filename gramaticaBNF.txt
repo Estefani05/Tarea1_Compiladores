@@ -50,7 +50,6 @@ Terminales-----------------------
  	read-> 'leer'
 	print-> 'impr'
 
-
 	arreg-> 'arrx' 
 	matrix-> 'matrx'
 
@@ -61,7 +60,7 @@ Terminales-----------------------
 	numEnt-> [0-9]+
 	numFlo-> [1-9].?[0-9]*
 	char-> [a-zA-Z_]
-
+	
 No Terminales------------------------
 
 	main-> expr
